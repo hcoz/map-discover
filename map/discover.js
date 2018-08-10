@@ -7,7 +7,7 @@ const NO_CHARGE = 2;
 const map = [];
 const discoverQueue = [];
 
-var logger = fs.createWriteStream('mapdata.txt', { flags: 'a' });
+var logger = fs.createWriteStream('map/log.txt', { flags: 'a' });
 
 // custom array method to check the discovery queue
 Array.prototype.inArray = function (arr) {
@@ -150,6 +150,11 @@ async function sendDrone(target) {
     console.log(discoverQueue[i]);
   }
   logger.end();
+
+  // write whole map in mapdata.txt
+  var mapper = fs.createWriteStream('map/mapdata.txt', { flags: 'a' });
+  mapper.write(JSON.stringify(map));
+  mapper.close();
 
   return map;
 })();
